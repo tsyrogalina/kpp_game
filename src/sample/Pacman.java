@@ -1,8 +1,6 @@
 package sample;
 
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -14,21 +12,23 @@ public class Pacman {
     private double scale;
     private final int startX = 14;
     private final int startY = 11;
-    private Image image;
+
     private DIR direction = DIR.STOP;
     private DIR newDirection = DIR.STOP;
+
     private double speed;
     private double width;
+
     private int frame = 0;
     private final int delay = 5;
     private int pos = 0;
 
-    public void init(double scale,double width, Image image) {
+    public void init(double scale,double width) {
         this.width=width;
         this.scale = scale;
         srcR = new Rect(82.5, 2.5, 15, 15);
         destR = new Rect(startX*scale+0.5, startY*scale+0.5, scale-1, scale-1);
-        this.image = image;
+
         speed = scale/10;
 
     }
@@ -83,9 +83,7 @@ public class Pacman {
 
     }
 
-    public void draw(GraphicsContext gc){
-        TextureManager.drawTexture(gc, image, srcR, destR);
-    }
+
 
     private void keyBoardController(Scene scene) {
 
@@ -162,4 +160,9 @@ public class Pacman {
 
     public Rect getDestR(){ return destR;}
 
+    public DIR getDirection() {
+        return direction;
+    }
+
+    public Rect getSrcR() { return srcR; }
 }
