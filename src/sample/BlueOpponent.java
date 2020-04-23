@@ -440,7 +440,7 @@ public class BlueOpponent implements Opponent {
             frame=0;
             return;
         }
-        if((flagEatBonus == true)&&frame%10==0) {
+        if((flagEatBonus ==true&&frame%10==0&&opponentMode!=OpponentMode.SCARE)||(flagEatBonus ==true&&frame%20==0&&opponentMode==OpponentMode.SCARE)) {
             flagEatBonus = false;
             opponentMode = OpponentMode.SCARE;
             speed =scale/20;
