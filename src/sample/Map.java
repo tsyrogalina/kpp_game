@@ -52,11 +52,11 @@ public class Map {
 
 
             };
-    public void init( final double SCALE, final double WIDTH, final double HEIGHT) {
+    public void init( final double SCALE) {
 
         this.SCALE = SCALE;
-        this.WIDTH = WIDTH;
-        this.HEIGHT = HEIGHT;
+        this.WIDTH = map[0].length;
+        this.HEIGHT = map.length;
 
         borderArray = new ArrayList<>();
         bonusArray = new Vector<Rect>();
@@ -114,6 +114,13 @@ public class Map {
     public List<Rect> getBorderArray() {
         return borderArray;
     }
+     public int getWidth(){
+        return map[0].length;
+     }
+     public int getHeigth()
+     {
+         return map.length;
+     }
 
     public Vector<Rect> getBonusArray() {
         return bonusArray;

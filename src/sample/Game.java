@@ -15,9 +15,9 @@ import java.util.List;
 
 public class Game {
 
-    private final double SCALE = 30;
-    private final double WIDTH = 28;
-    private final double HEIGHT = 31;
+    private  double SCALE = 0;
+    private double WIDTH = 0;
+    private double HEIGHT = 0;
 
     private VBox box;
     private Canvas c;
@@ -33,8 +33,10 @@ public class Game {
     private int score;
     private List<Opponent> opponents;
 
-    public void init(Stage primaryStage){
-
+    public void init(Stage primaryStage,double scale,double height,double width){
+        this.SCALE = scale;
+        this.HEIGHT = height;
+        this.WIDTH =width;
         box = new VBox();
         c = new Canvas(WIDTH * SCALE, HEIGHT * SCALE);
         box.getChildren().add(c);
@@ -44,7 +46,7 @@ public class Game {
         image = TextureManager.loadTexture("C:\\Users\\Галина\\Desktop\\KPP_Game-master\\sprite\\spritesheet.png");
 
         map = new Map();
-        map.init(SCALE, WIDTH, HEIGHT);
+        map.init(SCALE);
 
         opponents = new ArrayList<>();
         opponents.add(new RedOpponent());
@@ -87,7 +89,7 @@ public class Game {
         }
 
         for (Rect r : map.getBonusArray()) {
-            if (Collision.AABB(pacmanR, r)) {          //проверяем если еда
+            if (Collision.AABB(pacmanR, r)&&pacman.getFrame()%10==0) {          //проверяем если еда
                 map.getBonusArray().remove(r);              //то удаляем еду с экрана
                 score++;
                 if(map.getBonusArray().isEmpty())

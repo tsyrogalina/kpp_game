@@ -165,4 +165,5 @@ public class Pacman {
     }
 
     public Rect getSrcR() { return srcR; }
+    public int  getFrame(){return frame;}
 }

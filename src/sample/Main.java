@@ -8,6 +8,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    private final double SCALE = 30;
+    private double WIDTH = 0;
+    private double HEIGHT = 0;
 
     private final int FPS = 60;
     private final int frameDelay = 1000000000 / FPS;
@@ -16,9 +19,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        Map map  = new Map();
+       HEIGHT = (double)( map.getHeigth());
+       WIDTH = (double)(map.getWidth());
 
         game = new Game();
-        game.init(primaryStage);
+        game.init(primaryStage,SCALE,HEIGHT,WIDTH);
 
 
         new AnimationTimer() {

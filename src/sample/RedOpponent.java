@@ -1,5 +1,6 @@
 package sample;
 
+import java.util.Collection;
 import java.util.Vector;
 
 public class RedOpponent implements Opponent {
@@ -162,7 +163,7 @@ public class RedOpponent implements Opponent {
 
         }
 
-        Vector<DIR> availableDirections = new Vector<>();
+        Vector<DIR> availableDirections = new Vector<>();    //заменить на коллекцию
 
         for(int i = 0; i < 4;i++)
         {
@@ -377,7 +378,7 @@ public class RedOpponent implements Opponent {
             frame=0;
             return;
         }
-        if(score==5&&frame%10==0) {
+        if((score==15||score==70)&&frame%10==0) {
             opponentMode = OpponentMode.SCARE;
             speed =scale/20;
             frame =0;
