@@ -13,19 +13,20 @@ public class OrangeOpponent implements Opponent {
     private int frame = 0;
     private int pos = 0;
     private double speed;
-    private double height;
-    private double weight;
+    private int height;
+    private int weight;
     Map map;
-
+    private boolean flagEatBonus  = false;
     private Rect goalTile ;
     private OpponentMode opponentMode = OpponentMode.SCATTER;
 
     @Override
-    public void init(Map map, double scale, double height, double wight) {
+    public void init(Map map, double scale, int height, int wight) {
         this.weight = wight;
         this.height = height;
         this.scale = scale;
         this.map = map;
+
         goalTile = new Rect(0.5,height*scale+0.5,scale-1,scale-1);
 
         srcR = new Rect(142.5, 82.5, 15, 15);
@@ -36,12 +37,12 @@ public class OrangeOpponent implements Opponent {
     }
 
     @Override
-    public void update(Rect pacmanR, DIR pacmanDIR, int score) {
+    public boolean update(Rect pacmanR, DIR pacmanDIR, int score) {
         if(destR.x==0.5)
             direction = DIR.RIGHT;
         else if(destR.x==(weight -1)*scale+0.5)
             direction = DIR.LEFT;
-        setMode(pacmanR,pacmanDIR,score);
+        setMode(pacmanR,pacmanDIR,score,map.getSuperBonusArray());
         if(Collision.AABB(destR,pacmanR))
         {
             if(opponentMode == OpponentMode.SCARE) {
@@ -51,10 +52,10 @@ public class OrangeOpponent implements Opponent {
                 opponentMode= OpponentMode.CHASE;
                 goalTile = pacmanR.copy();
                 frame = 0;
-                return;
+                return true;
             }
             else{
-                //game over
+                return false;
             }
 
 
@@ -81,7 +82,7 @@ public class OrangeOpponent implements Opponent {
 
         animation();
 
-
+        return true;
     }
 
     @Override
@@ -165,6 +166,17 @@ public class OrangeOpponent implements Opponent {
 
 
 
+    }
+    @Override
+    public void restart(){
+        opponentMode = OpponentMode.SCATTER;
+        frame = 0;
+        direction = DIR.RIGHT;
+        goalTile = new Rect(0.5,height*scale+0.5,scale-1,scale-1);
+
+        srcR = new Rect(142.5, 82.5, 15, 15);
+
+        destR = new Rect(startX*scale+0.5, startY*scale+0.5, scale-1, scale-1);
     }
 
     @Override
@@ -415,7 +427,14 @@ public class OrangeOpponent implements Opponent {
 }
 
     @Override
-    public void setMode(Rect pacmanR, DIR pacmanDIR, int score) {
+    public void setMode(Rect pacmanR, DIR pacmanDIR, int score,Vector<Rect> superBonus) {
+        for( int i = 0; i<superBonus.size();i++)
+        {
+            if(Collision.AABB(pacmanR,superBonus.get(i)))
+            {
+                flagEatBonus = true;
+            }
+        }
         double distance = Math.hypot(destR.x-pacmanR.x,destR.y-pacmanR.y);
         if(frame==420&&opponentMode == OpponentMode.SCARE)
         {
@@ -424,7 +443,8 @@ public class OrangeOpponent implements Opponent {
             frame=0;
             return;
         }
-        if((score==15||score==70)&&frame%10==0) {
+        if((flagEatBonus ==true)&&frame%10==0) {
+            flagEatBonus = false;
             opponentMode = OpponentMode.SCARE;
             speed =scale/20;
             frame =0;

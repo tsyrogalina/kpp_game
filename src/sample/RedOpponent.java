@@ -14,12 +14,23 @@ public class RedOpponent implements Opponent {
     private int frame = 0;
     private int pos = 0;
     private double speed;
-    private double height;
-    private double weight;
+    private int height;
+    private int weight;
     Map map;
-
+    private boolean flagEatBonus = false;
     private Rect goalTile ;
     private OpponentMode opponentMode = OpponentMode.SCATTER;
+    @Override
+    public void restart()
+    {
+        opponentMode = OpponentMode.SCATTER;
+        goalTile = new Rect((weight-1)*scale+0.5,-scale+0.5,scale-1,scale-1);
+        frame =0;
+        srcR = new Rect(82.5, 82.5, 15, 15);
+        direction = DIR.LEFT;
+        destR = new Rect(startX*scale+0.5, startY*scale+0.5, scale-1, scale-1);
+
+    }
 
     @Override
     public void typicalBehavior( ){
@@ -270,7 +281,7 @@ public class RedOpponent implements Opponent {
     }
 
     @Override
-    public void init(Map map,double scale,double height,double wight) {
+    public void init(Map map,double scale,int height,int wight) {
         this.weight = wight;
         this.height = height;
         this.scale = scale;
@@ -369,7 +380,15 @@ public class RedOpponent implements Opponent {
 
     }
     @Override
-    public void setMode(Rect pacmanR,DIR pacmanDIR,int score){
+    public void setMode(Rect pacmanR,DIR pacmanDIR,int score,Vector<Rect> superBonus){
+        for( int i = 0; i<superBonus.size();i++)
+        {
+            if(Collision.AABB(pacmanR,superBonus.get(i)))
+            {
+                flagEatBonus = true;
+
+            }
+        }
 
         if(frame==420&&opponentMode == OpponentMode.SCARE)
         {
@@ -378,7 +397,9 @@ public class RedOpponent implements Opponent {
             frame=0;
             return;
         }
-        if((score==15||score==70)&&frame%10==0) {
+
+        if((flagEatBonus==true)&&frame%10==0) {
+            flagEatBonus = false;
             opponentMode = OpponentMode.SCARE;
             speed =scale/20;
             frame =0;
@@ -414,14 +435,14 @@ public class RedOpponent implements Opponent {
     }
 
     @Override
-    public void update(Rect pacmanR,DIR pacmanDIR,int score)
+    public boolean update(Rect pacmanR,DIR pacmanDIR,int score)
     {
 
         if(destR.x==0.5)
             direction = DIR.RIGHT;
         else if(destR.x==(weight -1)*scale+0.5)
             direction = DIR.LEFT;
-        setMode(pacmanR,pacmanDIR,score);
+        setMode(pacmanR,pacmanDIR,score,map.getSuperBonusArray());
         if(Collision.AABB(destR,pacmanR))
         {
             if(opponentMode == OpponentMode.SCARE) {
@@ -431,10 +452,10 @@ public class RedOpponent implements Opponent {
                 opponentMode= OpponentMode.CHASE;
                 goalTile = pacmanR.copy();
                 frame =0;
-                return;
+                return true;
             }
             else{
-                //game over
+                return false;//game over
             }
 
 
@@ -460,5 +481,6 @@ public class RedOpponent implements Opponent {
         }
 
         animation();
+        return true;
     }
 }

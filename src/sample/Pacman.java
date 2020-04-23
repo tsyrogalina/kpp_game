@@ -24,6 +24,9 @@ public class Pacman {
     private int pos = 0;
 
     public void init(double scale,double width) {
+        frame =0;
+        direction = DIR.STOP;
+        newDirection = DIR.STOP;
         this.width=width;
         this.scale = scale;
         srcR = new Rect(82.5, 2.5, 15, 15);
@@ -162,6 +165,14 @@ public class Pacman {
 
     public DIR getDirection() {
         return direction;
+    }
+    public void restart(){
+
+        frame = 0;
+        newDirection = DIR.STOP;
+        direction = DIR.STOP;
+        destR = new Rect(startX*scale+0.5, startY*scale+0.5, scale-1, scale-1);
+
     }
 
     public Rect getSrcR() { return srcR; }
