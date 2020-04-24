@@ -23,6 +23,22 @@ public class Pacman {
     private final int delay = 5;
     private int pos = 0;
 
+    public DIR getNewDirection(){return newDirection;}
+    public int getPos(){return pos;}
+    public void setPos(int p){pos = p;}
+    public void setNewDirection(DIR dir){newDirection = dir;}
+    public void setDirection(DIR dir){direction = dir; }
+    public void setSrcR(Rect r){
+        srcR = r;
+    }
+    public void setDestR(Rect r){
+        destR = r;
+    }
+    public void setFrame(int f)
+    {
+        frame = f;
+    }
+
     public void init(double scale,double width) {
         frame =0;
         direction = DIR.STOP;

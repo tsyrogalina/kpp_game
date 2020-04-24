@@ -56,6 +56,7 @@ public class Map {
 
 
             };
+
     public void init( final double SCALE) {
         image = TextureManager.loadTexture("sprite\\spritesheet.png");
         this.SCALE = SCALE;
@@ -68,6 +69,7 @@ public class Map {
         superBonusArraySource = new Vector<Rect>();
         fillArray();
     }
+
 
     public void fillArray()
     {
@@ -99,6 +101,10 @@ public class Map {
         }
 
 
+    }
+
+    public Vector<Rect> getSuperBonusArraySource() {
+        return superBonusArraySource;
     }
 
     public void draw(GraphicsContext gc){
@@ -136,6 +142,8 @@ public class Map {
         double offset= SCALE/3;
         bonusArray.clear();
         superBonusArray.clear();
+        superBonusArraySource.clear();
+        double srcY = 160.5;
         for(int i = 0, end = map.length; i < end; i++) {
             for(int j = 0, endL = map[i].length; j < endL; j++) {
                 if(map[i][j] == 0) {
@@ -146,7 +154,8 @@ public class Map {
                 {
                     superBonusArray.add(new Rect(j*SCALE+0.5,i*SCALE+0.5,SCALE-1,SCALE-1));
 
-
+                    superBonusArraySource.add(new Rect(167.5,srcY,20,20));
+                    srcY+=20;
                 }
 
 

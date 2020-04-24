@@ -20,16 +20,6 @@ public class Main extends Application {
     private StartWindow sw = null;
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.primaryStage = primaryStage;
-        Map map  = new Map();
-       HEIGHT = map.getHeigth();
-       WIDTH = map.getWidth();
-
-        game = new Game();
-        game.init(primaryStage,this);
-
-         sw = new StartWindow();
-        sw.init(primaryStage, this);
 
         at = new AnimationTimer() {
             long lastTick = 0;
@@ -44,7 +34,24 @@ public class Main extends Application {
 
         };
 
+        this.primaryStage = primaryStage;
+        Map map  = new Map();
+       HEIGHT = map.getHeigth();
+       WIDTH = map.getWidth();
 
+        game = new Game();
+        game.init(primaryStage,this);
+
+         sw = new StartWindow();
+        sw.init(primaryStage, this);
+
+
+
+
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     public int getHEIGHT(){return HEIGHT;}
@@ -71,6 +78,11 @@ public class Main extends Application {
         at.stop();
         //sw.setStartScreen();
     }
+    public void continueGame()
+    {
+        at.start();
+    }
+
     public  void showMenu(){
         sw.setStartScreen();
 

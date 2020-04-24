@@ -2,6 +2,7 @@ package sample;
 
 import java.util.Vector;
 
+
 public class PinkOpponent implements Opponent {
     private Rect srcR;              //место расположеняи привидения на спрайте
     private Rect destR;             //место расположения привидения на карте
@@ -19,6 +20,68 @@ public class PinkOpponent implements Opponent {
     private boolean flagEatBonus = false;
     private Rect goalTile ;
     private OpponentMode opponentMode = OpponentMode.SCATTER;
+
+    public Rect getDestR(){return destR;}
+
+    public DIR getDirection() {
+        return direction;
+    }
+
+    public Rect getSrcR() {
+        return srcR;
+    }
+
+    public int getFrame() {
+        return frame;
+    }
+
+    public int getPos() {
+        return pos;
+    }
+
+    public Rect getGoalTile() {
+        return goalTile;
+    }
+
+    public OpponentMode getOpponentMode() {
+        return opponentMode;
+    }
+    public boolean getFlagEatBonus()
+    {
+        return flagEatBonus;
+    }
+
+    public void setDestR(Rect destR) {
+        this.destR = destR;
+    }
+
+    public void setDirection(DIR direction) {
+        this.direction = direction;
+    }
+
+    public void setFlagEatBonus(boolean flagEatBonus) {
+        this.flagEatBonus = flagEatBonus;
+    }
+
+    public void setFrame(int frame) {
+        this.frame = frame;
+    }
+
+    public void setGoalTile(Rect goalTile) {
+        this.goalTile = goalTile;
+    }
+
+    public void setOpponentMode(OpponentMode opponentMode) {
+        this.opponentMode = opponentMode;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
+
+    public void setSrcR(Rect srcR) {
+        this.srcR = srcR;
+    }
 
     @Override
     public void init(Map map, double scale, int height, int wight) {

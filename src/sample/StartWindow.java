@@ -3,9 +3,13 @@ package sample;
 
 import javafx.animation.Animation;
 import javafx.animation.FillTransition;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -18,7 +22,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+
+import java.io.File;
+import java.util.Optional;
 
 
 public class StartWindow{
@@ -29,6 +37,7 @@ public class StartWindow{
     private Scene scene;
     private Image image;
     private Image imagePacmanText;
+    private Image imageBg;
     private Pane root;
     private Game game = null;
     private int height ;
@@ -47,8 +56,10 @@ public class StartWindow{
 
         image = TextureManager.loadTexture("sprite\\gameOver.gif");
         imagePacmanText = TextureManager.loadTexture("sprite\\pacmanText.png");
+        imageBg = TextureManager.loadTexture("sprite\\bg.png");
         ImageView img = new ImageView(image);
         ImageView img2 = new ImageView(imagePacmanText);
+        ImageView img3 = new ImageView(imageBg);
         img.setFitHeight(270*((width*scale)/480));
         img.setFitWidth(width*scale);
         img2.setX(scale*width/9*2);
@@ -56,7 +67,13 @@ public class StartWindow{
         img2.setFitWidth(scale*width*5/9);
         img2.setFitHeight(771*5*scale*width/9/2950);
 
-        root.getChildren().addAll(img,img2);
+        img3.setFitHeight(scale*height);
+        img3.setFitWidth(scale*width);
+
+        scene = new Scene(root,width*scale,height*scale);
+        scene.setFill(Color.BLACK);
+
+        root.getChildren().addAll(img3,img,img2);
 
         root.getChildren().add(box);
         StackPane newGame = addButton("New game");
@@ -66,14 +83,61 @@ public class StartWindow{
         box.setTranslateY(height*scale/2+scale*5);
         box.getChildren().addAll(newGame, records,rules);
         newGame.setOnMouseClicked(event -> { main.startGame(); });
-        scene = new Scene(root,width*scale,height*scale,Color.BLACK);
+
+
+
+
         primaryStage.setTitle("PacMan");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        if(new File("saveGame\\saveGame.bin").isFile())
+        {
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Dialog confirmation");
+
+                alert.setContentText("Wnat to continue? If you choose NO, you will lose your saved data.");
+                alert.setHeaderText ("You have an unfinished game.");
+
+                ButtonType buttonYes = new ButtonType("Yes");
+                ButtonType buttonNo = new ButtonType("No",ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                alert.getButtonTypes().setAll(buttonYes,buttonNo);
+                Optional<ButtonType> result = alert.showAndWait();
+
+
+
+                if (result.get() == buttonYes) {
+                    main.startGame();
+
+                    main.getGame().continueGame();
+
+                }
+                else if (result.get() == buttonNo) {
+                    try{
+                        File file = new File("saveGame\\saveGame.bin");
+                        file.delete();
+                    }
+                    catch(Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+
+            }
+
+
     }
 
     public void setStartScreen()
     {
+
+
         primaryStage.setTitle("PacMan");
         primaryStage.setScene(scene);
         primaryStage.show();

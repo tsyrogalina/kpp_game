@@ -1,6 +1,8 @@
 package sample;
 
-public class Rect {
+import java.io.*;
+
+public class Rect implements Serializable {
     double x;
     double y;
     double h;
@@ -9,6 +11,10 @@ public class Rect {
     Rect() {
         x = y = h = w = 0;
     }
+
+
+
+
 
     Rect(final double x, final double y, final double h, final double w) {
         this.x = x;
