@@ -7,9 +7,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -43,6 +41,7 @@ public class StartWindow{
     private int height ;
     private int width;
     private double scale;
+    private DifficultyLevel lvl=DifficultyLevel.EASY;
 
 
     public void init(Stage primaryStage,Main main)
@@ -53,6 +52,8 @@ public class StartWindow{
         height = main.getHEIGHT();
         root = new Pane();
         box = new VBox(scale);
+
+
 
         image = TextureManager.loadTexture("sprite\\gameOver.gif");
         imagePacmanText = TextureManager.loadTexture("sprite\\pacmanText.png");
@@ -77,12 +78,41 @@ public class StartWindow{
 
         root.getChildren().add(box);
         StackPane newGame = addButton("New game");
-        StackPane records = addButton("Table of records");
-        StackPane rules = addButton("Game rules");
+
         box.setTranslateX(width*scale/3);
         box.setTranslateY(height*scale/2+scale*5);
-        box.getChildren().addAll(newGame, records,rules);
-        newGame.setOnMouseClicked(event -> { main.startGame(); });
+        box.getChildren().addAll(newGame);
+        newGame.setOnMouseClicked(event -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Dialog confirmation");
+
+            //alert.setContentText("Wnat to continue? If you choose NO, you will lose your saved data.");
+            alert.setHeaderText ("Choose level.");
+
+            ButtonType buttonEasy = new ButtonType("Easy");
+            ButtonType buttonMedium = new ButtonType("Medium");
+            ButtonType buttonDifficult = new ButtonType("Difficult");
+
+
+            alert.getButtonTypes().setAll(buttonEasy,buttonMedium,buttonDifficult);
+            Optional<ButtonType> result = alert.showAndWait();
+
+
+
+
+            if (result.get() == buttonDifficult) {
+                lvl = DifficultyLevel.DIFFICULT;
+
+            }
+            else if (result.get() == buttonMedium) {
+                lvl = DifficultyLevel.MEDIUM;
+            }
+            else {
+                lvl = DifficultyLevel.EASY;
+            }
+            main.getGame().setLvl(lvl);
+            main.startGame(); });
 
 
 

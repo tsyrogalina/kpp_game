@@ -38,7 +38,7 @@ public class Main extends Application {
         Map map  = new Map();
        HEIGHT = map.getHeigth();
        WIDTH = map.getWidth();
-
+        primaryStage.setResizable(false);
         game = new Game();
         game.init(primaryStage,this);
 

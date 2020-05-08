@@ -45,11 +45,19 @@ public class Game {
     private int score;
     private List<Opponent> opponents;
 
+    private DifficultyLevel lvl =DifficultyLevel.EASY;
+
+    public void setLvl(DifficultyLevel lvl)
+    {
+        this.lvl = lvl;
+    }
+
     public void init(Stage primaryStage,Main main){
         this.SCALE = main.getScale();
         this.HEIGHT = main.getHEIGHT();
         this.WIDTH =main.getWIDTH();
         this.primaryStage = primaryStage;
+       // this.primaryStage.centerOnScreen();
         this.main = main;
         box = new VBox();
         c = new Canvas(WIDTH * SCALE, HEIGHT * SCALE);
@@ -139,7 +147,7 @@ public class Game {
         scene.removeEventFilter(KeyEvent.KEY_PRESSED, handler);
 
        // primaryStage.removeEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, handler1);
-        map.restart();
+        map.restart(lvl);
         pacman.restart();
 
     }
@@ -213,6 +221,7 @@ public class Game {
 
         try(DataOutputStream dos = new DataOutputStream(new FileOutputStream("saveGame\\saveGame.bin",true)))
         {
+            dos.writeInt(score);
             //PACMAN
 
             dos.writeInt(pacman.getFrame());
@@ -302,6 +311,7 @@ public class Game {
 
             }
             //map
+
             int num = map.getBonusArray().size();
             dos.writeInt(num);
             for (int i = 0; i <num;i++)
@@ -343,6 +353,7 @@ public class Game {
     {
         try(DataInputStream dis = new DataInputStream(new FileInputStream("saveGame\\saveGame.bin")))
         {
+            score = dis.readInt();
             //pacman
             pacman.setFrame(dis.readInt());
             pacman.setPos(dis.readInt());
@@ -395,6 +406,7 @@ public class Game {
                o.setFlagEatBonus(dis.readBoolean());
             }
                ////map
+
                int num =dis.readInt();
                map.getBonusArray().clear();
                for(int i = 0; i < num;i++)

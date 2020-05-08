@@ -20,6 +20,7 @@ public class Map {
     private Vector<Rect> superBonusArray;
     private Vector<Rect> superBonusArraySource;
     private Image image;
+    private DifficultyLevel lvl =DifficultyLevel.EASY;
 
     private final int[][] map =
                     {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -138,7 +139,8 @@ public class Map {
         return borderArray;
     }
 
-    public void restart(){
+    public void restart(DifficultyLevel levl){
+        this.lvl = levl;
         double offset= SCALE/3;
         bonusArray.clear();
         superBonusArray.clear();
@@ -160,6 +162,25 @@ public class Map {
 
 
             }
+
+        }
+        switch (lvl)
+        {
+            case MEDIUM:
+            {
+                superBonusArraySource.remove(3);
+                superBonusArraySource.remove(0);
+                superBonusArray.remove(3);
+                superBonusArray.remove(0);
+                break;
+            }
+            case DIFFICULT:
+            {
+                superBonusArray.clear();
+                superBonusArraySource.clear();
+
+            }
+
 
         }
 

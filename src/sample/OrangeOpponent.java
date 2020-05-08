@@ -244,143 +244,144 @@ public class OrangeOpponent implements Opponent {
     @Override
     public void typicalBehavior() {
         double vectors[] = {0, 0, 0, 0}; //left,right,up,down
+        Rect rect = destR.copy();
         if(direction == DIR.RIGHT)
         {
-        vectors[0] = -2;
-        destR.x+=speed;
-        for (Rect r : map.getBorderArray()) {
-            if (Collision.AABB(destR, r)) {
-                vectors[1]=-1;                   //если забор то сюда идти нельзя
+            vectors[0] = -2;
+            rect.x+=speed;
+            for (Rect r : map.getBorderArray()) {
+                if (Collision.AABB(rect, r)) {
+                    vectors[1]=-1;                   //если забор то сюда идти нельзя
 
-                break;                               //проверяем все заборики
+                    break;                               //проверяем все заборики
+                }
             }
-        }
-        destR.x-=speed;
+            rect.x-=speed;
 
-        destR.y-=speed;
-        for (Rect r : map.getBorderArray()) {
-            if (Collision.AABB(destR, r)) {
-                vectors[2]=-1;                   //если забор то сюда идти нельзя
+            rect.y-=speed;
+            for (Rect r : map.getBorderArray()) {
+                if (Collision.AABB(rect, r)) {
+                    vectors[2]=-1;                   //если забор то сюда идти нельзя
 
-                break;                               //проверяем все заборики
+                    break;                               //проверяем все заборики
+                }
             }
-        }
-        destR.y+=speed;
+            rect.y+=speed;
 
-        destR.y+=speed;
-        for (Rect r : map.getBorderArray()) {
-            if (Collision.AABB(destR, r)) {
-                vectors[3]=-1;                   //если забор то сюда идти нельзя
+            rect.y+=speed;
+            for (Rect r : map.getBorderArray()) {
+                if (Collision.AABB(rect, r)) {
+                    vectors[3]=-1;                   //если забор то сюда идти нельзя
 
-                break;                               //проверяем все заборики
+                    break;                               //проверяем все заборики
+                }
             }
-        }
-        destR.y-=speed;
+            rect.y-=speed;
 
-    }
+        }
         else if(direction == DIR.LEFT)
-    {
-        vectors[1] = -2;
-        destR.x-=speed;
-        for (Rect r : map.getBorderArray()) {
-            if (Collision.AABB(destR, r)) {
-                vectors[0]=-1;                   //если забор то сюда идти нельзя
+        {
+            vectors[1] = -2;
+            rect.x-=speed;
+            for (Rect r : map.getBorderArray()) {
+                if (Collision.AABB(rect, r)) {
+                    vectors[0]=-1;                   //если забор то сюда идти нельзя
 
-                break;                               //проверяем все заборики
+                    break;                               //проверяем все заборики
+                }
             }
-        }
-        destR.x+=speed;
+            rect.x+=speed;
 
-        destR.y-=speed;
-        for (Rect r : map.getBorderArray()) {
-            if (Collision.AABB(destR, r)) {
-                vectors[2]=-1;                   //если забор то сюда идти нельзя
+            rect.y-=speed;
+            for (Rect r : map.getBorderArray()) {
+                if (Collision.AABB(rect, r)) {
+                    vectors[2]=-1;                   //если забор то сюда идти нельзя
 
-                break;                               //проверяем все заборики
+                    break;                               //проверяем все заборики
+                }
             }
-        }
-        destR.y+=speed;
+            rect.y+=speed;
 
-        destR.y+=speed;
-        for (Rect r : map.getBorderArray()) {
-            if (Collision.AABB(destR, r)) {
-                vectors[3]=-1;                   //если забор то сюда идти нельзя
+            rect.y+=speed;
+            for (Rect r : map.getBorderArray()) {
+                if (Collision.AABB(rect, r)) {
+                    vectors[3]=-1;                   //если забор то сюда идти нельзя
 
-                break;                               //проверяем все заборики
+                    break;                               //проверяем все заборики
+                }
             }
+            rect.y-=speed;
+
+
         }
-        destR.y-=speed;
-
-
-    }
         else if(direction ==DIR.DOWN) {
-        vectors[2] = -2;
-        destR.x-=speed;
-        for (Rect r : map.getBorderArray()) {
-            if (Collision.AABB(destR, r)) {
-                vectors[0]=-1;                   //если забор то сюда идти нельзя
+            vectors[2] = -2;
+            rect.x-=speed;
+            for (Rect r : map.getBorderArray()) {
+                if (Collision.AABB(rect, r)) {
+                    vectors[0]=-1;                   //если забор то сюда идти нельзя
 
-                break;                               //проверяем все заборики
+                    break;                               //проверяем все заборики
+                }
             }
-        }
-        destR.x+=speed;
+            rect.x+=speed;
 
-        destR.x+=speed;
-        for (Rect r : map.getBorderArray()) {
-            if (Collision.AABB(destR, r)) {
-                vectors[1]=-1;                   //если забор то сюда идти нельзя
+            rect.x+=speed;
+            for (Rect r : map.getBorderArray()) {
+                if (Collision.AABB(rect, r)) {
+                    vectors[1]=-1;                   //если забор то сюда идти нельзя
 
-                break;                               //проверяем все заборики
+                    break;                               //проверяем все заборики
+                }
             }
-        }
-        destR.x-=speed;
+            rect.x-=speed;
 
-        destR.y+=speed;
-        for (Rect r : map.getBorderArray()) {
-            if (Collision.AABB(destR, r)) {
-                vectors[3]=-1;                   //если забор то сюда идти нельзя
+            rect.y+=speed;
+            for (Rect r : map.getBorderArray()) {
+                if (Collision.AABB(rect, r)) {
+                    vectors[3]=-1;                   //если забор то сюда идти нельзя
 
-                break;                               //проверяем все заборики
+                    break;                               //проверяем все заборики
+                }
             }
+            rect.y-=speed;
+
+
         }
-        destR.y-=speed;
-
-
-    }
         else if(direction ==DIR.UP) {
-        vectors[3] = -2;
-        destR.x-=speed;
-        for (Rect r : map.getBorderArray()) {
-            if (Collision.AABB(destR, r)) {
-                vectors[0]=-1;                   //если забор то сюда идти нельзя
+            vectors[3] = -2;
+            rect.x-=speed;
+            for (Rect r : map.getBorderArray()) {
+                if (Collision.AABB(rect, r)) {
+                    vectors[0]=-1;                   //если забор то сюда идти нельзя
 
-                break;                               //проверяем все заборики
+                    break;                               //проверяем все заборики
+                }
             }
-        }
-        destR.x+=speed;
+            rect.x+=speed;
 
-        destR.x+=speed;
-        for (Rect r : map.getBorderArray()) {
-            if (Collision.AABB(destR, r)) {
-                vectors[1]=-1;                   //если забор то сюда идти нельзя
+            rect.x+=speed;
+            for (Rect r : map.getBorderArray()) {
+                if (Collision.AABB(rect, r)) {
+                    vectors[1]=-1;                   //если забор то сюда идти нельзя
 
-                break;                               //проверяем все заборики
+                    break;                               //проверяем все заборики
+                }
             }
-        }
-        destR.x-=speed;
+            rect.x-=speed;
 
-        destR.y-=speed;
-        for (Rect r : map.getBorderArray()) {
-            if (Collision.AABB(destR, r)) {
-                vectors[2]=-1;                   //если забор то сюда идти нельзя
+            rect.y-=speed;
+            for (Rect r : map.getBorderArray()) {
+                if (Collision.AABB(rect, r)) {
+                    vectors[2]=-1;                   //если забор то сюда идти нельзя
 
-                break;                               //проверяем все заборики
+                    break;                               //проверяем все заборики
+                }
             }
+            rect.y+=speed;
+
+
         }
-        destR.y+=speed;
-
-
-    }
 
     Vector<DIR> availableDirections = new Vector<>();
 
